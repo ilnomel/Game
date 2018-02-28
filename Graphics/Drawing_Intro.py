@@ -6,6 +6,9 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+
+PI = math.pi
 pygame.init()
 
 # Set the width and height of the screen [width, height]
@@ -32,7 +35,16 @@ while not done:
     screen.fill(WHITE)
     
     # draw a rectangle
-    pygame.draw.rect(screen, RED, [55, 50, 20, 25])
+    pygame.draw.rect(screen, RED, [300, 300, 250, 100],2)
+    
+    # draw an ellipse, using a rectangle as the outside boundary
+    pygame.draw.ellipse(screen, BLACK, [300, 300, 250, 100],2)
+    
+    # draw an arc as part of an ellipse. use radians to determine what angle to draw
+    pygame.draw.arc(screen, GREEN, [300, 300, 250, 100], PI/2, PI, 2)
+    pygame.draw.arc(screen, BLACK, [300, 300, 250, 100], 0, PI/2, 2)
+    pygame.draw.arc(screen, RED, [300, 300, 250, 100], 3*PI/2, 2*PI, 2)
+    pygame.draw.arc(screen, BLUE, [300, 300, 250, 100], PI, 3*PI/2,2)
     
     # draw a line from (0,0) to (100,100)
     # that is 5 pixels wide                    
@@ -52,6 +64,25 @@ while not done:
         y = int(75 * math.cos(radians_y)) + 200
         pygame.draw.line(screen, BLACK, [x,y], [x+5,y], 5)
         
+    #drawing multiple x
+    for x_offset in range(30, 300, 30):
+        pygame.draw.line(screen, BLACK, [x_offset, 100], [x_offset-10, 90],2)
+        pygame.draw.line(screen, BLACK, [x_offset, 90], [x_offset-10, 100],2)
+        
+    #draw triangle using polygon command
+    pygame.draw.polygon(screen, BLACK, [[500, 100], [400, 200], [500, 200]], 5)  
+    
+    #drawing text
+    
+    # select the font to use, size, bold, italics
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    
+    # render the text. "True" means anti-aliased text
+    #creates an image of the letters, but does not put it on screen yet
+    text = font.render("My text", True, BLACK)
+    
+    #put the image of text on the screen at 300, 250
+    screen.blit(text, [300, 250])
     
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
